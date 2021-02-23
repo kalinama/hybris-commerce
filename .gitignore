@@ -1,0 +1,52 @@
+# Folders to ignore at the root of the repository
+/log
+/temp
+/roles
+/data
+
+/bin/*
+!/bin/custom
+
+/config/backup
+/config/customize
+/config/languages
+/config/tcServer
+/config/tomcat
+
+# Folders to ignore wherever they are
+.externalToolBuilders
+.settings
+**/WEB-INF/lib
+**/web/commonwebsrc
+classes
+gensrc
+
+# Files to ignore
+/config/readme.txt
+*.classpath
+*.class
+*.project
+*.springBeans
+*.log
+*testclasses.xml
+*_bof.jar
+platformhome.properties
+build.xml
+items.xsd
+beans.xsd
+extensioninfo.xsd
+
+# Intellij Idea
+.idea
+idea-module-files
+hybris4intellij.properties
+
+#  Addon specific copy folders and files
+**/_ui/addons
+**/views/addons
+**/tld/addons
+**/tags/addons
+**/messages/addons
+**/_ui-src/addons
+**/web/addonsrc
+**/wro_addons.xml
