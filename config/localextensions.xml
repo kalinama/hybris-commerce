@@ -58,6 +58,7 @@
     <extension name='odata2webservicesfeaturetests' />
     <extension name='kymaintegrationbackoffice' />
     <extension name='kymaintegrationsampledata' />
+	<extension name="addonsupport"/>
 	<!-- custom-ext -->
 	<extension name='trainingfulfilmentprocess' />
     <extension name='trainingcore' />
@@ -66,5 +67,6 @@
     <extension name='trainingstorefront' />
     <extension name='traininginitialdata' />
     <extension name='trainingbackoffice' />
+	<extension name='questionsaddon' />
   </extensions>
 </hybrisconfig>
