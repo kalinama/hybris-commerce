@@ -30,6 +30,31 @@
 		<property name="template" value="${keygen.question.code.template}"/>
 	</bean>
 
+	<bean id="questionPopulator" class="com.hybris.training.populators.QuestionPopulator"/>
+	<bean id="productQuestionsPopulator" class="com.hybris.training.populators.ProductQuestionsPopulator">
+		<property name="questionConverter" ref="questionConverter"/>
+	</bean>
+
+	<bean id="questionConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.hybris.training.data.QuestionData"/>
+		<property name="populators">
+			<list merge="true">
+				<ref bean="questionPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultProductConverter" alias="productConverter"/>
+	<bean id="defaultProductConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.commercefacades.product.data.ProductData"/>
+		<property name="populators">
+			<list>
+				<ref bean="productPopulator"/>
+				<ref bean="productQuestionsPopulator"/>
+			</list>
+		</property>
+	</bean>
+
 	<bean id="questionPrepareInterceptor" class="com.hybris.training.interceptors.QuestionPrepareInterceptor">
 		<property name="keyGenerator" ref="questionCodeGenerator"/>
 	</bean>

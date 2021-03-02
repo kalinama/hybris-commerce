@@ -57,6 +57,22 @@
 				</attribute>
 			</attributes>
 		</itemtype>
+
+		<itemtype code="QuestionsCMSComponent" extends="SimpleCMSComponent" generate="true" autocreate="true"
+				  abstract="false" jaloclass="com.hybris.training.jalo.QuestionsCMSComponent">
+			<description>component for displaying question/answer feature on PDP</description>
+			<attributes>
+				<attribute qualifier="numberOfQuestionsToShow " type="java.lang.Integer">
+					<defaultvalue>3</defaultvalue>
+					<persistence type="property"/>
+					<modifiers optional="false"/>
+				</attribute>
+				<attribute qualifier="fontSize" type="java.lang.Integer">
+					<defaultvalue>12</defaultvalue>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
 	</itemtypes>
 
 </items>

@@ -10,9 +10,25 @@
  */
 package com.hybris.training.controllers;
 
+import com.hybris.training.model.QuestionsCMSComponentModel;
+
 /**
+ *
  */
-public interface QuestionsaddonControllerConstants
-{
-	// implement here controller constants used by this extension
+public interface QuestionsaddonControllerConstants {
+
+    /**
+     * Class with action name constants
+     */
+    interface Actions {
+        interface Cms {
+            String _Prefix = "/view/";
+            String _Suffix = "Controller";
+
+            /**
+             * CMS components that have specific handlers
+             */
+            String CustomOffersComponent = _Prefix + QuestionsCMSComponentModel._TYPECODE + _Suffix;
+        }
+    }
 }
