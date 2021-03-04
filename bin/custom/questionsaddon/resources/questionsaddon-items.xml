@@ -24,6 +24,22 @@
 	</relations>
 
 	<itemtypes>
+		<itemtype code="Product" autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="questionCount" type="java.lang.Integer">
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="CMSProductListComponent" autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="productDiscussionImage" type="Media">
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
 		<itemtype code="Question" autocreate="true" generate="true">
 			<deployment table="Questions" typecode="10100"/>
 			<attributes>
@@ -74,5 +90,4 @@
 			</attributes>
 		</itemtype>
 	</itemtypes>
-
 </items>

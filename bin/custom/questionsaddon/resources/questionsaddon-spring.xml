@@ -22,6 +22,8 @@
            
     <context:annotation-config/>
 
+	<bean id="questionsaddonSystemSetup" class="com.hybris.training.setup.QuestionsaddonSystemSetup" parent="abstractCoreSystemSetup" />
+
 	<bean id="questionCodeGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
 		<property name="key" value="${keygen.question.code.name}"/>
 		<property name="digits" value="${keygen.question.code.digits}"/>
@@ -44,15 +46,9 @@
 		</property>
 	</bean>
 
-	<alias name="defaultProductConverter" alias="productConverter"/>
-	<bean id="defaultProductConverter" parent="abstractPopulatingConverter">
-		<property name="targetClass" value="de.hybris.platform.commercefacades.product.data.ProductData"/>
-		<property name="populators">
-			<list>
-				<ref bean="productPopulator"/>
-				<ref bean="productQuestionsPopulator"/>
-			</list>
-		</property>
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productConverter"/>
+		<property name="add"  ref="productQuestionsPopulator"/>
 	</bean>
 
 	<bean id="questionPrepareInterceptor" class="com.hybris.training.interceptors.QuestionPrepareInterceptor">
@@ -62,6 +58,13 @@
 		  class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
 		<property name="interceptor" ref="questionPrepareInterceptor"/>
 		<property name="typeCode" value="Question"/>
+	</bean>
+
+	<bean id="productQuestionCountPrepareInterceptor" class="com.hybris.training.interceptors.ProductQuestionCountPrepareInterceptor"/>
+	<bean id="productQuestionCountPrepareInterceptorMapping"
+		  class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="productQuestionCountPrepareInterceptor"/>
+		<property name="typeCode" value="Product"/>
 	</bean>
 
 	<bean id="questionsaddonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">

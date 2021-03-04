@@ -11,6 +11,7 @@
 package com.hybris.training.controllers;
 
 import com.hybris.training.model.QuestionsCMSComponentModel;
+import de.hybris.platform.acceleratorcms.model.components.CMSProductListComponentModel;
 
 /**
  *
@@ -28,7 +29,9 @@ public interface QuestionsaddonControllerConstants {
             /**
              * CMS components that have specific handlers
              */
-            String CustomOffersComponent = _Prefix + QuestionsCMSComponentModel._TYPECODE + _Suffix;
+            String QuestionsCMSComponent = _Prefix + QuestionsCMSComponentModel._TYPECODE + _Suffix;
+            String CMSProductListComponent = _Prefix + CMSProductListComponentModel._TYPECODE + _Suffix;
+
         }
     }
 }

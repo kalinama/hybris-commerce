@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller("QuestionsCMSComponentController")
-@RequestMapping(value = QuestionsaddonControllerConstants.Actions.Cms.CustomOffersComponent)
+@RequestMapping(value = QuestionsaddonControllerConstants.Actions.Cms.QuestionsCMSComponent)
 public class QuestionsCMSComponentController extends AbstractCMSAddOnComponentController<QuestionsCMSComponentModel> {
 
     @Override

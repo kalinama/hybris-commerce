@@ -59,6 +59,7 @@
     <extension name='kymaintegrationbackoffice' />
     <extension name='kymaintegrationsampledata' />
 	<extension name="addonsupport"/>
+	<extension name="solrserver"/>
 	<!-- custom-ext -->
 	<extension name='trainingfulfilmentprocess' />
     <extension name='trainingcore' />

@@ -1,5 +1,9 @@
 $contentCatalog = electronicsContentCatalog
 $contentCV = catalogVersion(catalog(id[default=$contentCatalog]), version[default='Online'])[default=$contentCatalog:Online]
+$addonExtensionName = questionsaddon
+$picture = media(code, $contentCV)
+$siteResource=jar:com.hybris.training.constants.QuestionsaddonConstants&/questionsaddon/images
+
 
 INSERT_UPDATE QuestionsCMSComponent; $contentCV[unique = true]; uid[unique = true] ; name                ; numberOfQuestionsToShow; fontSize
                                    ;                          ; QuestionsComponent ; Questions Component ; 3                      ; 18
@@ -11,4 +15,14 @@ INSERT_UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]; name  
                          ;                          ; QuestionsSlot     ; Questions Slot ; true  ; QuestionsComponent
 
 INSERT_UPDATE ContentSlotForPage; $contentCV[unique = true]; uid[unique = true]               ; position[unique = true]; page(uid, $contentCV)[unique = true][default = 'productDetails']; contentSlot(uid, $contentCV)[unique = true]
-                                ;                          ; QuestionsSlot-ProductDetailsPage ; QuestionsSection       ;                                                                             ; QuestionsSlot
+                                ;                          ; QuestionsSlot-ProductDetailsPage ; QuestionsSection       ;                                                                 ; QuestionsSlot
+
+INSERT_UPDATE PageTemplate; $contentCV[unique = true]; uid[unique = true]         ; frontendTemplateName
+                          ;                          ; ProductDetailsPageTemplate ; addon:/$addonExtensionName/pages/product/productDetails
+
+
+INSERT_UPDATE Media;$contentCV[unique=true];code[unique=true];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='image/jpeg'];folder(qualifier)[default='images']
+                   ;;/images/icon-product-discussion.jpg;icon-product-discussion.jpg;$siteResource/icon-product-discussion.jpg;
+
+INSERT_UPDATE CMSProductListComponent;$contentCV[unique=true];uid[unique=true];productDiscussionImage(code)
+                                     ;;ProductListComponent;/images/icon-product-discussion.jpg
