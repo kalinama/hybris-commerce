@@ -33,6 +33,7 @@
 	</bean>
 
 	<bean id="questionPopulator" class="com.hybris.training.populators.QuestionPopulator"/>
+	<bean id="searchResultProductQuestionCountPopulator" class="com.hybris.training.populators.SearchResultProductQuestionCountPopulator"/>
 	<bean id="productQuestionsPopulator" class="com.hybris.training.populators.ProductQuestionsPopulator">
 		<property name="questionConverter" ref="questionConverter"/>
 	</bean>
@@ -49,6 +50,11 @@
 	<bean parent="modifyPopulatorList">
 		<property name="list" ref="productConverter"/>
 		<property name="add"  ref="productQuestionsPopulator"/>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="commerceSearchResultProductConverter"/>
+		<property name="add"  ref="searchResultProductQuestionCountPopulator"/>
 	</bean>
 
 	<bean id="questionPrepareInterceptor" class="com.hybris.training.interceptors.QuestionPrepareInterceptor">

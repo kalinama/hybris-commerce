@@ -4,13 +4,17 @@
 <%@ taglib prefix="storepickup" tagdir="/WEB-INF/tags/responsive/storepickup" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<spring:htmlEscape defaultHtmlEscape="true" />
+<spring:htmlEscape defaultHtmlEscape="true"/>
 
-<nav:pagination top="true" supportShowPaged="${isShowPageAllowed}" supportShowAll="${isShowAllAllowed}" searchPageData="${searchPageData}" searchUrl="${searchPageData.currentQuery.url}"  numberPagesShown="${numberPagesShown}"/>
+<nav:pagination top="true" supportShowPaged="${isShowPageAllowed}" supportShowAll="${isShowAllAllowed}"
+                searchPageData="${searchPageData}" searchUrl="${searchPageData.currentQuery.url}"
+                numberPagesShown="${numberPagesShown}"/>
 
 <div class="product__listing product__list">
     <c:forEach items="${searchPageData.results}" var="product" varStatus="status">
-        <img src="${productDiscussionImage.downloadURL}" class="cmsProductListComponent_discussionImage">
+        <c:if test="${product.questionCount > 0}">
+            <img src="${productDiscussionImage.downloadURL}" class="cmsProductListComponent_discussionImage">
+        </c:if>
         <product:productListerItem product="${product}"/>
     </c:forEach>
 </div>
@@ -23,6 +27,8 @@
     </div>
 </div>
 
-<nav:pagination top="false" supportShowPaged="${isShowPageAllowed}" supportShowAll="${isShowAllAllowed}" searchPageData="${searchPageData}" searchUrl="${searchPageData.currentQuery.url}"  numberPagesShown="${numberPagesShown}"/>
+<nav:pagination top="false" supportShowPaged="${isShowPageAllowed}" supportShowAll="${isShowAllAllowed}"
+                searchPageData="${searchPageData}" searchUrl="${searchPageData.currentQuery.url}"
+                numberPagesShown="${numberPagesShown}"/>
 
 <storepickup:pickupStorePopup/>

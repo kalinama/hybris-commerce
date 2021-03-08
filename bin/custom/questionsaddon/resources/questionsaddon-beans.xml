@@ -16,6 +16,7 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
 
 	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+		<property name="questionCount" type="Integer"/>
 		<property name="questions" type="java.util.List&lt;com.hybris.training.data.QuestionData&gt;" />
 	</bean>
 	
