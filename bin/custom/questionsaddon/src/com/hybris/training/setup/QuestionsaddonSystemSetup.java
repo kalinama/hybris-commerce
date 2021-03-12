@@ -24,7 +24,6 @@ public class QuestionsaddonSystemSetup extends AbstractSystemSetup{
     @SystemSetup(type = SystemSetup.Type.ESSENTIAL)
     public boolean createEssentialData(final SystemSetupContext context) {
         LOG.info("Starting custom essential data loading for the Questionsaddon...");
-        importImpexFile(context,"/questionsaddon/import/stores/electronics/solr.impex");
         LOG.info("Custom essential data loading for the Questionsaddon completed.");
         return true;
     }
@@ -32,6 +31,10 @@ public class QuestionsaddonSystemSetup extends AbstractSystemSetup{
     @SystemSetup(type = SystemSetup.Type.PROJECT)
     public boolean createProjectData(final SystemSetupContext context) {
         LOG.info("Starting custom project data loading for the Questionsaddon...");
+        importImpexFile(context,"/questionsaddon/import/stores/electronics/solr.impex");
+        importImpexFile(context,"/questionsaddon/import/stores/electronics/store.impex");
+        importImpexFile(context,"/questionsaddon/import/contentCatalogs/electronicsContentCatalog/cms-content.impex");
+        importImpexFile(context,"/impex/questionsaddon-questions.impex");
         LOG.info("Custom project data loading for the Questionsaddon completed.");
         return true;
     }
