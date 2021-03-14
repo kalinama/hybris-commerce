@@ -22,6 +22,8 @@
            
     <context:annotation-config/>
 
+	<bean id="customerIsInternalAttributeHandler" class="com.hybris.training.attributehandlers.CustomerIsInternalAttributeHandler"/>
+
 	<bean id="questionsaddonSystemSetup" class="com.hybris.training.setup.QuestionsaddonSystemSetup" parent="abstractCoreSystemSetup" />
 
 	<bean id="questionCodeGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
@@ -71,6 +73,15 @@
 		  class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
 		<property name="interceptor" ref="productQuestionCountPrepareInterceptor"/>
 		<property name="typeCode" value="Product"/>
+	</bean>
+
+	<bean id="customerHybridsGroupPrepareInterceptor" class="com.hybris.training.interceptors.CustomerHybridsGroupPrepareInterceptor">
+		<property name="userGroupDao" ref="userGroupDao"/>
+	</bean>
+	<bean id="customerHybridsGroupPrepareInterceptorMapping"
+		  class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="customerHybridsGroupPrepareInterceptor"/>
+		<property name="typeCode" value="Customer"/>
 	</bean>
 
 	<bean id="questionsaddonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">

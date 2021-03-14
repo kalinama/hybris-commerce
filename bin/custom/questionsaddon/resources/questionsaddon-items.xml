@@ -24,10 +24,21 @@
 	</relations>
 
 	<itemtypes>
+
 		<itemtype code="Product" autocreate="false" generate="false">
 			<attributes>
 				<attribute qualifier="questionCount" type="java.lang.Integer">
 					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="Customer" autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="isInternal" type="java.lang.Boolean">
+					<description>defines if the customer is a hybris internal employee</description>
+					<persistence type="dynamic" attributeHandler="customerIsInternalAttributeHandler"/>
+					<modifiers read="true" write="false"/>
 				</attribute>
 			</attributes>
 		</itemtype>

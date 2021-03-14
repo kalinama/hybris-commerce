@@ -32,7 +32,9 @@ public class QuestionsaddonSystemSetup extends AbstractSystemSetup{
     public boolean createProjectData(final SystemSetupContext context) {
         LOG.info("Starting custom project data loading for the Questionsaddon...");
         importImpexFile(context,"/questionsaddon/import/stores/electronics/solr.impex");
+        importImpexFile(context,"/questionsaddon/import/common/user-groups.impex");
         importImpexFile(context,"/questionsaddon/import/stores/electronics/store.impex");
+        importImpexFile(context,"/questionsaddon/import/productCatalogs/electronicsProductCatalog/products-prices.impex");
         importImpexFile(context,"/questionsaddon/import/contentCatalogs/electronicsContentCatalog/cms-content.impex");
         importImpexFile(context,"/impex/questionsaddon-questions.impex");
         LOG.info("Custom project data loading for the Questionsaddon completed.");
