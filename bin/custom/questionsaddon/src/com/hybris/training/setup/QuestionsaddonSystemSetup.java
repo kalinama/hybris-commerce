@@ -21,19 +21,20 @@ public class QuestionsaddonSystemSetup extends AbstractSystemSetup{
         return Collections.emptyList();
     }
 
-    @SystemSetup(type = SystemSetup.Type.ESSENTIAL)
+    @SystemSetup(type = SystemSetup.Type.ESSENTIAL, process = SystemSetup.Process.UPDATE)
     public boolean createEssentialData(final SystemSetupContext context) {
         LOG.info("Starting custom essential data loading for the Questionsaddon...");
         LOG.info("Custom essential data loading for the Questionsaddon completed.");
         return true;
     }
 
-    @SystemSetup(type = SystemSetup.Type.PROJECT)
+    @SystemSetup(type = SystemSetup.Type.PROJECT, process = SystemSetup.Process.UPDATE)
     public boolean createProjectData(final SystemSetupContext context) {
         LOG.info("Starting custom project data loading for the Questionsaddon...");
         importImpexFile(context,"/questionsaddon/import/stores/electronics/solr.impex");
-        importImpexFile(context,"/questionsaddon/import/common/user-groups.impex");
+        importImpexFile(context,"/questionsaddon/import/stores/electronics/promotions.impex");
         importImpexFile(context,"/questionsaddon/import/stores/electronics/store.impex");
+        importImpexFile(context,"/questionsaddon/import/common/user-groups.impex");
         importImpexFile(context,"/questionsaddon/import/productCatalogs/electronicsProductCatalog/products-prices.impex");
         importImpexFile(context,"/questionsaddon/import/contentCatalogs/electronicsContentCatalog/cms-content.impex");
         importImpexFile(context,"/impex/questionsaddon-questions.impex");

@@ -23,6 +23,7 @@
     <context:annotation-config/>
 
 	<bean id="customerIsInternalAttributeHandler" class="com.hybris.training.attributehandlers.CustomerIsInternalAttributeHandler"/>
+	<bean id="productQuestionCountAttributeHandler" class="com.hybris.training.attributehandlers.ProductQuestionCountAttributeHandler"/>
 
 	<bean id="questionsaddonSystemSetup" class="com.hybris.training.setup.QuestionsaddonSystemSetup" parent="abstractCoreSystemSetup" />
 
@@ -66,13 +67,6 @@
 		  class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
 		<property name="interceptor" ref="questionPrepareInterceptor"/>
 		<property name="typeCode" value="Question"/>
-	</bean>
-
-	<bean id="productQuestionCountPrepareInterceptor" class="com.hybris.training.interceptors.ProductQuestionCountPrepareInterceptor"/>
-	<bean id="productQuestionCountPrepareInterceptorMapping"
-		  class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
-		<property name="interceptor" ref="productQuestionCountPrepareInterceptor"/>
-		<property name="typeCode" value="Product"/>
 	</bean>
 
 	<bean id="customerHybridsGroupPrepareInterceptor" class="com.hybris.training.interceptors.CustomerHybridsGroupPrepareInterceptor">

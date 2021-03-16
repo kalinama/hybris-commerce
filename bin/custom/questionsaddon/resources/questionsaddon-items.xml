@@ -28,7 +28,8 @@
 		<itemtype code="Product" autocreate="false" generate="false">
 			<attributes>
 				<attribute qualifier="questionCount" type="java.lang.Integer">
-					<persistence type="property"/>
+					<persistence type="dynamic" attributeHandler="productQuestionCountAttributeHandler"/>
+					<modifiers read="true" write="false"/>
 				</attribute>
 			</attributes>
 		</itemtype>
