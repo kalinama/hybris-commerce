@@ -8,3 +8,6 @@
 # Information and shall use it only in accordance with the terms of the
 # license agreement you entered into with SAP.
 # -----------------------------------------------------------------------
+
+INSERT_UPDATE SyncAttributeDescriptorConfig; syncJob(code)[unique = true, path-delimiter = !]; attributeDescriptor(enclosingType(code), qualifier)[unique = true]; includedInSync; copyByValue
+                                           ; "sync electronicsProductCatalog:Staged->Online" ; Product:questions                                                 ; true          ; true

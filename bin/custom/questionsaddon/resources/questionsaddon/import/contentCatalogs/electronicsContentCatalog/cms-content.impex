@@ -9,7 +9,7 @@
 # license agreement you entered into with SAP.
 # -----------------------------------------------------------------------
 $contentCatalog = electronicsContentCatalog
-$contentCV = catalogVersion(catalog(id[default=$contentCatalog]), version[default='Online'])[default=$contentCatalog:Online]
+$contentCV = catalogVersion(catalog(id[default=$contentCatalog]), version[default='Staged'])[default=$contentCatalog:Staged]
 $addonExtensionName = questionsaddon
 $picture = media(code, $contentCV)
 $siteResource = jar:com.hybris.training.constants.QuestionsaddonConstants&/questionsaddon/images

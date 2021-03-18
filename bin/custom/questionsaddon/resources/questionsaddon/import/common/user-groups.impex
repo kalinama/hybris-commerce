@@ -19,6 +19,6 @@ INSERT_UPDATE Usergroup; uid[unique = true]; groups(uid)[mode = append]
                        ; $regulargroup     ; $customergroup
                        ; $hybridsgroup     ; $customergroup
 
-INSERT_UPDATE Customer; uid[unique = true]; name; password[default = $defaultPassword]
+INSERT_UPDATE Customer; uid[unique = true]; name; password[default = $defaultPassword]; groups(uid)[default = $customergroup]
                       ; katery@hybris.com ; Kate Jonsen
                       ; hhgt@hybr.com     ; Nick Bylwin

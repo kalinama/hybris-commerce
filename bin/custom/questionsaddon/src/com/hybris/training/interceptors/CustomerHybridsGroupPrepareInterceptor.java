@@ -9,7 +9,9 @@ import de.hybris.platform.servicelayer.interceptor.PrepareInterceptor;
 import de.hybris.platform.servicelayer.user.daos.UserGroupDao;
 import org.springframework.beans.factory.annotation.Required;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class CustomerHybridsGroupPrepareInterceptor implements PrepareInterceptor<CustomerModel> {
@@ -21,8 +23,13 @@ public class CustomerHybridsGroupPrepareInterceptor implements PrepareIntercepto
     @Override
     public void onPrepare(CustomerModel customerModel, InterceptorContext interceptorContext) throws InterceptorException {
         UserGroupModel hybridsGroupModel = userGroupDao.findUserGroupByUid(HYBRIDS_GROUP_UID);
+        if (hybridsGroupModel == null) {
+            return;
+        }
+        Set<PrincipalGroupModel> groups = Optional.ofNullable(customerModel.getGroups())
+                .orElse(Collections.emptySet());
         if (customerModel.getIsInternal()) {
-            if (!customerModel.getGroups().contains(hybridsGroupModel)) {
+            if (!groups.contains(hybridsGroupModel)) {
                 Set<PrincipalGroupModel> customerGroups = new HashSet<>(customerModel.getGroups());
                 customerGroups.add(hybridsGroupModel);
                 customerModel.setGroups(customerGroups);

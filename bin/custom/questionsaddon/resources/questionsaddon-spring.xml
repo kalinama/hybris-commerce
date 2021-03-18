@@ -22,6 +22,8 @@
            
     <context:annotation-config/>
 
+	<import resource="classpath:/questionsaddon/integration/hot-folder-store-electronics-spring.xml"/>
+
 	<bean id="customerIsInternalAttributeHandler" class="com.hybris.training.attributehandlers.CustomerIsInternalAttributeHandler"/>
 	<bean id="productQuestionCountAttributeHandler" class="com.hybris.training.attributehandlers.ProductQuestionCountAttributeHandler"/>
 
@@ -77,6 +79,11 @@
 		<property name="interceptor" ref="customerHybridsGroupPrepareInterceptor"/>
 		<property name="typeCode" value="Customer"/>
 	</bean>
+
+	<alias name="questionsaddonSampleDataImportService" alias="addonSampleDataImportService" />
+	<bean id="questionsaddonSampleDataImportService"
+		  class="com.hybris.training.setup.QuestionsaddonSampleDataImportService"
+		  parent="defaultAddonSampleDataImportService"/>
 
 	<bean id="questionsaddonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
 		<property name="supportedChannels">
