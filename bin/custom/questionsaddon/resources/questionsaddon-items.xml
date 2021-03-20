@@ -16,6 +16,10 @@
 <items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="items.xsd">
 
+    <collectiontypes>
+        <collectiontype code="QuestionList" elementtype="Question" autocreate="true" generate="true" type="list"/>
+    </collectiontypes>
+
     <relations>
         <relation code="Product2Question" autocreate="true" localized="false">
             <sourceElement type="Product" qualifier="product" cardinality="one"/>
@@ -116,5 +120,40 @@
                 </attribute>
             </attributes>
         </itemtype>
+
+        <itemtype code="QuestionsUpdatesEmailProcess"
+                  extends="StoreFrontCustomerProcess" generate="true" autocreate="true">
+            <attributes>
+                <attribute qualifier="questions" type="QuestionList">
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="QuestionsUpdatesEmailSendingCronJob"
+                  extends="CronJob" generate="true" autocreate="true">
+            <attributes>
+                <attribute qualifier="recipientEmailAddress" type="java.lang.String">
+                    <description>the e-mail address to which to send questions updates</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="baseSite" type="BaseSite">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="store" type="BaseStore">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="catalogVersion" type="CatalogVersion">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="language" type="Language">
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="lastStartTime" type="java.util.Date">
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
     </itemtypes>
 </items>

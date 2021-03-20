@@ -58,7 +58,7 @@
 		<property name="header">
 			<value>#{defaultImpexProductHeader}
 				# Insert Questions For Electronics Products
-				INSERT_UPDATE Question;code[unique=true];product(code,$catalogVersion);questionCustomer(uid);answerCustomer(uid);question[lang=$lang];answer[lang=$lang]
+				INSERT_UPDATE Question;code[unique=true];product(code,$catalogVersion);questionCustomer(uid);answerCustomer(uid);question[lang=$lang];answer[lang=$lang];$catalogVersion
 			</value>
 		</property>
 		<property name="impexRow">
