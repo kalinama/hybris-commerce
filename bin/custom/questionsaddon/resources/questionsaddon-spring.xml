@@ -55,8 +55,11 @@
 		<property name="frontendTemplateName" value="QuestionsUpdatesEmailTemplate"/>
 	</bean>
 
+	<bean id="questionApprovedAttributeHandler" class="com.hybris.training.attributehandlers.QuestionApprovedAttributeHandler"/>
 	<bean id="customerIsInternalAttributeHandler" class="com.hybris.training.attributehandlers.CustomerIsInternalAttributeHandler"/>
-	<bean id="productQuestionCountAttributeHandler" class="com.hybris.training.attributehandlers.ProductQuestionCountAttributeHandler"/>
+	<bean id="productQuestionCountAttributeHandler" class="com.hybris.training.attributehandlers.ProductQuestionCountAttributeHandler">
+		<property name="questionService" ref="questionService"/>
+	</bean>
 
 	<bean id="questionsaddonSystemSetup" class="com.hybris.training.setup.QuestionsaddonSystemSetup" parent="abstractCoreSystemSetup" />
 
@@ -72,6 +75,7 @@
 	<bean id="searchResultProductQuestionCountPopulator" class="com.hybris.training.populators.SearchResultProductQuestionCountPopulator"/>
 	<bean id="productQuestionsPopulator" class="com.hybris.training.populators.ProductQuestionsPopulator">
 		<property name="questionConverter" ref="questionConverter"/>
+		<property name="questionService" ref="questionService"/>
 	</bean>
 	<bean id="entryToProductDataPopulator" class="com.hybris.training.populators.EntryToProductDataPopulator">
 		<property name="questionConverter" ref="questionConverter"/>

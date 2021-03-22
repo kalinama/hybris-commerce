@@ -69,5 +69,6 @@
     <extension name='traininginitialdata' />
     <extension name='trainingbackoffice' />
 	<extension name='questionsaddon' />
+	<extension name='questionsbackoffice' />
   </extensions>
 </hybrisconfig>

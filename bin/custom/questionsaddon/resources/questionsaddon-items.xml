@@ -102,6 +102,10 @@
                     <persistence type="property"/>
                     <description>customer who answered the question; can be anonymous</description>
                 </attribute>
+                <attribute qualifier="approved" type="java.lang.Boolean">
+                    <persistence type="dynamic" attributeHandler="questionApprovedAttributeHandler"/>
+                    <modifiers read="true" write="false"/>
+                </attribute>
             </attributes>
         </itemtype>
 
