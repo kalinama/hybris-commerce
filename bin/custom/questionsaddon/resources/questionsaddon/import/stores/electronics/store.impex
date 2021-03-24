@@ -1,0 +1,39 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+$productCatalog = electronicsProductCatalog
+$classificationCatalog = ElectronicsClassification
+$currencies = JPY, USD
+$net = false
+$storeUid = electronics
+$defaultCurrency = USD
+$languages = ja, en, de, zh
+$defaultLanguage = en
+$unitedKingdom = GB, GG, IM, JE
+$europeNotUK = AD, AL, AT, BA, BE, BG, BY, CH, CY, CZ, DE, DK, EE, ES, FI, FO, FR, GI, GL, GR, HR, HU, IE, IS, IT, LI, LT, LU, LV, MC, MD, ME, MK, MT, NL, NO, PL, PT, RO, RS, RU, SE, SI, SK, SM, TR, UA, VA
+$asianCountries = CN, JP, VN, HK, KP, KR
+$deliveryCountries = $unitedKingdom, $europeNotUK, $asianCountries, US
+$orderProcessCode = order-process
+$customerAllowedToIgnoreSuggestions = true
+$paymentProvider = Mockup
+$expressCheckoutEnabled = true
+$pickupInStoreMode = BUY_AND_COLLECT
+
+# Base Store
+INSERT_UPDATE BaseStore; uid[unique = true]; catalogs(id)                           ; pickupInStoreMode(code); maxRadiusForPoSSearch
+                       ; $storeUid         ; $productCatalog,$classificationCatalog ; $pickupInStoreMode     ; 300
+
+INSERT_UPDATE PointOfService; name[unique = true]        ; type(code); address(&addrID); latitude; longitude; geocodeTimestamp[dateformat = dd-MM-yyyy]; basestore(uid)[default = $storeUid]; warehouses(code)
+                            ; Minsk Kalvariyskaya Street ; STORE     ; addr1           ; 53,9069 ; 27,5237  ; 29-04-2025                               ;                                    ; warehouse_e
+                            ; Minsk Surganov Street      ; STORE     ; addr2           ; 53,9266 ; 27,5918  ; 29-04-2025                               ;                                    ; warehouse_e,warehouse_s
+
+INSERT_UPDATE Address; &addrID; streetname           ; streetnumber; postalcode[unique = true]; town[unique = true]; country(isocode); region(isocode); phone1; owner(PointOfService.name)[unique = true]
+                     ; addr1  ; Kalvariyskaya Street ; 21          ; 44-100                   ; Minsk              ; BY              ;                ;       ; Minsk Kalvariyskaya Street
+                     ; addr2  ; Surganov Street      ; 57B         ; 80636                    ; Minsk              ; BY              ;                ;       ; Minsk Surganov Street

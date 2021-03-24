@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/>
+
+	<bean id="questionsaddonSystemSetup" class="com.hybris.training.setup.QuestionsaddonSystemSetup" parent="abstractCoreSystemSetup" />
+
+	<bean id="questionCodeGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
+		<property name="key" value="${keygen.question.code.name}"/>
+		<property name="digits" value="${keygen.question.code.digits}"/>
+		<property name="start" value="${keygen.question.code.start}"/>
+		<property name="type" value="${keygen.question.code.type}"/>
+		<property name="template" value="${keygen.question.code.template}"/>
+	</bean>
+
+	<bean id="questionPopulator" class="com.hybris.training.populators.QuestionPopulator"/>
+	<bean id="searchResultProductQuestionCountPopulator" class="com.hybris.training.populators.SearchResultProductQuestionCountPopulator"/>
+	<bean id="productQuestionsPopulator" class="com.hybris.training.populators.ProductQuestionsPopulator">
+		<property name="questionConverter" ref="questionConverter"/>
+	</bean>
+
+	<bean id="questionConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.hybris.training.data.QuestionData"/>
+		<property name="populators">
+			<list merge="true">
+				<ref bean="questionPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productConverter"/>
+		<property name="add"  ref="productQuestionsPopulator"/>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="commerceSearchResultProductConverter"/>
+		<property name="add"  ref="searchResultProductQuestionCountPopulator"/>
+	</bean>
+
+	<bean id="questionPrepareInterceptor" class="com.hybris.training.interceptors.QuestionPrepareInterceptor">
+		<property name="keyGenerator" ref="questionCodeGenerator"/>
+	</bean>
+	<bean id="questionPrepareInterceptorMapping"
+		  class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="questionPrepareInterceptor"/>
+		<property name="typeCode" value="Question"/>
+	</bean>
+
+	<bean id="productQuestionCountPrepareInterceptor" class="com.hybris.training.interceptors.ProductQuestionCountPrepareInterceptor"/>
+	<bean id="productQuestionCountPrepareInterceptorMapping"
+		  class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="productQuestionCountPrepareInterceptor"/>
+		<property name="typeCode" value="Product"/>
+	</bean>
+
+	<bean id="questionsaddonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
+		<property name="supportedChannels">
+			<list value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+				<value>B2C</value>
+				<!--
+								<value>B2B</value>
+				-->
+			</list>
+		</property>
+		<property name="addonExtensionMetadata">
+			<bean class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
+				<property name="suffixChannel" value="false"/>
+				<property name="baseExtensionName" value="questionsaddon"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="questionsaddonSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
+		<property name="extensionName" value="questionsaddon" />
+	</bean>
+
+</beans>
