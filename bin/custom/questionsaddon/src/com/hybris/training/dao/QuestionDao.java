@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface QuestionDao {
     List<QuestionModel> findQuestionsCreatedAfterDate(Date date);
+    List<QuestionModel> findQuestions();
 }

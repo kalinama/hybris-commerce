@@ -9,5 +9,6 @@ import java.util.Set;
 
 public interface QuestionService {
     List<QuestionModel> getQuestionsCreatedAfterDate(Date date);
+    List<QuestionModel> getQuestions();
     Set<QuestionModel> getApprovedQuestions(ProductModel product);
 }

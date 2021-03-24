@@ -22,6 +22,11 @@ public class DefaultQuestionService implements QuestionService {
     }
 
     @Override
+    public List<QuestionModel> getQuestions() {
+        return questionDao.findQuestions();
+    }
+
+    @Override
     public Set<QuestionModel> getApprovedQuestions(ProductModel product) {
         return CollectionUtils
                 .emptyIfNull(product.getQuestions())

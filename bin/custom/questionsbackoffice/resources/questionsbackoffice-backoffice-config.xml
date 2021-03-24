@@ -61,8 +61,7 @@
 				</wz:content>
 				<wz:navigation id="step1.navigation">
 					<wz:cancel/>
-					<wz:done visible="!#empty(newQuestion.question) and newQuestion.questionCustomer != null
-					and newQuestion.catalogVersion != null">
+					<wz:done visible="newQuestion.questionCustomer != null and newQuestion.catalogVersion != null">
 						<wz:save property="newQuestion"/>
 					</wz:done>
 				</wz:navigation>

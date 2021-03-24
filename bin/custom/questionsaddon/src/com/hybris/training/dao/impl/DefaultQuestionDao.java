@@ -15,6 +15,7 @@ public class DefaultQuestionDao implements QuestionDao {
 
     private final static String QUERY_FIND_QUESTIONS_BY_DATE = "SELECT {" + QuestionModel.PK + "} FROM {" + QuestionModel._TYPECODE
             + "} WHERE {" + QuestionModel.CREATIONTIME + "} > ?date";
+    private final static String QUERY_FIND_QUESTIONS = "SELECT {" + QuestionModel.PK + "} FROM {" + QuestionModel._TYPECODE + "}";
 
     private FlexibleSearchService flexibleSearchService;
 
@@ -23,6 +24,13 @@ public class DefaultQuestionDao implements QuestionDao {
         Map<String, Object> params = Collections.singletonMap("date", date);
         SearchResult<QuestionModel> result = flexibleSearchService.search(QUERY_FIND_QUESTIONS_BY_DATE, params);
         return result.getResult();
+    }
+
+    @Override
+    public List<QuestionModel> findQuestions() {
+        return flexibleSearchService
+                .<QuestionModel>search(QUERY_FIND_QUESTIONS)
+                .getResult();
     }
 
     @Required

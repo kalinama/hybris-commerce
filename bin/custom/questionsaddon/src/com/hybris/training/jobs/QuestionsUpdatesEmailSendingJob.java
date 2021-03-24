@@ -48,9 +48,12 @@ public class QuestionsUpdatesEmailSendingJob extends AbstractJobPerformable<Ques
         emailProcessModel.setCustomer((CustomerModel) userService
                 .getUserForUID(cronJobModel.getRecipientEmailAddress()));
 
-        Date lastEndTime = Optional.ofNullable(cronJobModel.getLastStartTime()).orElse(new Date());
-        emailProcessModel.setQuestions(questionService.getQuestionsCreatedAfterDate(lastEndTime));
-
+        Optional<Date> lastEndTime = Optional.ofNullable(cronJobModel.getLastStartTime());
+        if (lastEndTime.isPresent()) {
+            emailProcessModel.setQuestions(questionService.getQuestionsCreatedAfterDate(lastEndTime.get()));
+        } else {
+            emailProcessModel.setQuestions(questionService.getQuestions());
+        }
         emailProcessModel.setSite(cronJobModel.getBaseSite());
         emailProcessModel.setStore(cronJobModel.getStore());
         emailProcessModel.setLanguage(cronJobModel.getLanguage());
