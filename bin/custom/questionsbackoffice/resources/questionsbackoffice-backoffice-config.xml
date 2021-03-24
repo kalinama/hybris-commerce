@@ -88,6 +88,16 @@
 		</editorArea:editorArea>
 	</context>
 
+	<context merge-by="type" type="Product" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.tab.product.properties">
+				<editorArea:section name="hmc.product.descriptions">
+					<editorArea:attribute qualifier="minAge" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
 	<context type="Question" component="editorAreaDynamicForms" merge-by="type">
 		<df:dynamicForms xmlns:df="http://www.hybris.com/cockpitng/component/dynamicForms" modelProperty="*">
 			<df:attribute id="uniqueId" computedValue="context.answer != null" qualifier="approval" triggeredOn="answer" >

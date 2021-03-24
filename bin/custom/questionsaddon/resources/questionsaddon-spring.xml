@@ -71,6 +71,9 @@
 		<property name="template" value="${keygen.question.code.template}"/>
 	</bean>
 
+	<bean id="searchResultProductMinAgePopulator" class="com.hybris.training.populators.SearchResultProductMinAgePopulator"/>
+	<bean id="productMinAgePopulator" class="com.hybris.training.populators.ProductMinAgePopulator"/>
+
 	<bean id="questionPopulator" class="com.hybris.training.populators.QuestionPopulator"/>
 	<bean id="searchResultProductQuestionCountPopulator" class="com.hybris.training.populators.SearchResultProductQuestionCountPopulator"/>
 	<bean id="productQuestionsPopulator" class="com.hybris.training.populators.ProductQuestionsPopulator">
@@ -104,8 +107,17 @@
 		<property name="add"  ref="productQuestionsPopulator"/>
 	</bean>
 	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productConverter"/>
+		<property name="add"  ref="productMinAgePopulator"/>
+	</bean>
+
+	<bean parent="modifyPopulatorList">
 		<property name="list" ref="commerceSearchResultProductConverter"/>
 		<property name="add"  ref="searchResultProductQuestionCountPopulator"/>
+	</bean>
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="commerceSearchResultProductConverter"/>
+		<property name="add"  ref="searchResultProductMinAgePopulator"/>
 	</bean>
 
 	<bean id="questionPrepareInterceptor" class="com.hybris.training.interceptors.QuestionPrepareInterceptor">

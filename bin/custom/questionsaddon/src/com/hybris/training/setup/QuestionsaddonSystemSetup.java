@@ -40,6 +40,7 @@ public class QuestionsaddonSystemSetup extends AbstractSystemSetup{
         importImpexFile(context,"/questionsaddon/import/contentCatalogs/electronicsContentCatalog/cms-content.impex");
         importImpexFile(context, "/questionsaddon/import/productCatalogs/electronicsProductCatalog/questions.impex");
         importImpexFile(context, "/questionsaddon/import/contentCatalogs/electronicsContentCatalog/email-content.impex");
+        importImpexFile(context, "/questionsaddon/import/productCatalogs/electronicsProductCatalog/products-addon-extra.impex");
         LOG.info("Custom project data loading for the Questionsaddon completed.");
         return true;
     }

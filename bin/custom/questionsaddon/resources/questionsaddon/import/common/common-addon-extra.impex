@@ -23,3 +23,9 @@ INSERT_UPDATE SyncAttributeDescriptorConfig; syncJob(code)[unique = true, path-d
 # Define the cron job and the job that it wraps
 INSERT_UPDATE QuestionsUpdatesEmailSendingCronJob; code[unique = true]                 ; job(code)                       ; recipientEmailAddress; baseSite(uid); store(uid)  ; language(isocode); $catalogVersion; sessionUser(uid)       ; singleExecutable; sessionLanguage(isocode)
                                                  ; questionsUpdatesEmailSendingCronJob ; questionsUpdatesEmailSendingJob ; "margokr@gmail.com"  ; electronics  ; electronics ; en               ;                ; questionsaddontestuser ; false           ; en
+
+INSERT_UPDATE MinConstraint; id[unique = true]  ; severity(code, itemtype(code)); active; annotation                       ; descriptor(enclosingType(code), qualifier); message[lang = ru]                                                                        ; message[lang = en]                                     ; value
+                           ; MinAgeMinThreshold ; ERROR:Severity                ; true  ; javax.validation.constraints.Min ; Product:minAge                            ; Минимальный возраст для использования продукта не может быть выражен отрицательным числом ; The minimum age to use the product can not be negative ; 0
+
+INSERT_UPDATE MaxConstraint; id[unique = true]  ; severity(code, itemtype(code)); active; annotation                       ; descriptor(enclosingType(code), qualifier); message[lang = ru]                                                     ; message[lang = en]                                        ; value
+                           ; MinAgeMaxThreshold ; ERROR:Severity                ; true  ; javax.validation.constraints.Max ; Product:minAge                            ; Минимальный возраст для использования продукта не может быть больше 70 ; The minimum age to use the product cannot be more than 70 ; 70

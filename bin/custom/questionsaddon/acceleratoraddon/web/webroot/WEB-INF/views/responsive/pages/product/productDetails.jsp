@@ -2,12 +2,14 @@
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/responsive/template"%>
 <%@ taglib prefix="cms" uri="http://hybris.com/tld/cmstags"%>
 <%@ taglib prefix="product" tagdir="/WEB-INF/tags/responsive/product"%>
+<%@ taglib prefix="productQuestionsaddon" tagdir="/WEB-INF/tags/addons/questionsaddon/responsive/product"%>
+
 
 <template:page pageTitle="${pageTitle}">
     <cms:pageSlot position="Section1" var="comp" element="div" class="productDetailsPageSection1">
         <cms:component component="${comp}" element="div" class="productDetailsPageSection1-component"/>
     </cms:pageSlot>
-    <product:productDetailsPanel />
+    <productQuestionsaddon:productDetailsPanel />
     <cms:pageSlot position="CrossSelling" var="comp" element="div" class="productDetailsPageSectionCrossSelling">
         <cms:component component="${comp}" element="div" class="productDetailsPageSectionCrossSelling-component"/>
     </cms:pageSlot>

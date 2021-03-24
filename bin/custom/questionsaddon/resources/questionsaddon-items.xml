@@ -35,6 +35,10 @@
                     <persistence type="dynamic" attributeHandler="productQuestionCountAttributeHandler"/>
                     <modifiers read="true" write="false"/>
                 </attribute>
+                <attribute qualifier="minAge" type="java.lang.Integer">
+                    <description>minimum age allowed to use this product</description>
+                    <persistence type="property"/>
+                </attribute>
             </attributes>
         </itemtype>
 
