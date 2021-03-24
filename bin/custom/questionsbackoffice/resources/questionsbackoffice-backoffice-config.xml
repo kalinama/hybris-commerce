@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<config xmlns="http://www.hybris.com/cockpit/config"
+		xmlns:list-view="http://www.hybris.com/cockpitng/component/listView"
+		xmlns:as="http://www.hybris.com/cockpitng/config/advancedsearch"
+		xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config"
+		xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+
+	<context merge-by="type" component="explorer-tree" parent="auto" module="questionsbackoffice">
+		<n:explorer-tree xmlns:n="http://www.hybris.com/cockpitng/config/explorertree">
+			<n:navigation-node id="hmc_navigationnode_questionsaddon">
+				<n:type-node id="hmc_typenode_questions" code="Question" />
+			</n:navigation-node>
+		</n:explorer-tree>
+	</context>
+
+	<context merge-by="type" type="Question" component="listview">
+		<list-view:list-view refresh-after-object-creation="true">
+			<list-view:column qualifier="code"/>
+			<list-view:column qualifier="product"/>
+			<list-view:column qualifier="questionCustomer"/>
+			<list-view:column qualifier="answerCustomer"/>
+			<list-view:column qualifier="catalogVersion"/>
+		</list-view:list-view>
+	</context>
+
+	<context merge-by="type" type="Question" component="advanced-search">
+		<as:advanced-search connection-operator="AND">
+			<as:field-list disable-attributes-comparator="false" disable-subtypes-checkbox="false">
+				<as:field name="product" operator="equals" selected="true"/>
+				<as:field name="questionCustomer" operator="equals" selected="true"/>
+			</as:field-list>
+			<as:sort-field name="code" asc="false" />
+		</as:advanced-search>
+	</context>
+
+	<context component="create-wizard" type="Question">
+		<wz:flow id="QuestionWizard" title="create.title(ctx.TYPE_CODE)">
+			<wz:prepare id="questionPrepare">
+				<wz:initialize property="newQuestion" type="Question"/>
+			</wz:prepare>
+			<wz:step id="step1" label="create.question.general.label" sublabel="create.question.general.sublabel">
+				<wz:content id="step1.content">
+					<wz:property-list root="newQuestion">
+						<wz:property qualifier="code" type="java.lang.String"/>
+						<wz:property qualifier="catalogVersion"/>
+						<wz:property qualifier="question"/>
+						<wz:property qualifier="questionCustomer"/>
+						<wz:property qualifier="answer"/>
+						<wz:property qualifier="answerCustomer"/>
+					</wz:property-list>
+				</wz:content>
+				<wz:navigation id="step1.navigation">
+					<wz:cancel/>
+					<wz:done visible="newQuestion.questionCustomer != null and newQuestion.catalogVersion != null">
+						<wz:save property="newQuestion"/>
+					</wz:done>
+				</wz:navigation>
+			</wz:step>
+		</wz:flow>
+	</context>
+
+	<context merge-by="type" type="Question" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:essentials>
+				<editorArea:essentialSection name="hmc.essential">
+					<editorArea:attribute qualifier="product" />
+					<editorArea:attribute qualifier="questionCustomer" />
+				</editorArea:essentialSection>
+			</editorArea:essentials>
+			<editorArea:tab name="hmc.tab.question.question-answer">
+				<editorArea:section name="hmc.tab.question.question-answer.configuration">
+					<editorArea:attribute qualifier="question" />
+					<editorArea:attribute qualifier="answer" />
+					<editorArea:attribute qualifier="approved" />
+				</editorArea:section>
+			</editorArea:tab>
+			<editorArea:tab name="hmc.administration"/>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="type" type="Product" component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.tab.product.properties">
+				<editorArea:section name="hmc.product.descriptions">
+					<editorArea:attribute qualifier="minAge" />
+				</editorArea:section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context type="Question" component="editorAreaDynamicForms" merge-by="type">
+		<df:dynamicForms xmlns:df="http://www.hybris.com/cockpitng/component/dynamicForms" modelProperty="*">
+			<df:attribute id="uniqueId" computedValue="context.answer != null" qualifier="approval" triggeredOn="answer" >
+				<df:scriptingConfig computedValueLanguage="Groovy" computedValueScriptType="inline"/>
+			</df:attribute>
+		</df:dynamicForms>
+	</context>
+</config>

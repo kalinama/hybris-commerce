@@ -8,3 +8,10 @@
 # Information and shall use it only in accordance with the terms of the
 # license agreement you entered into with SAP.
 # -----------------------------------------------------------------------
+$productCatalog = electronicsProductCatalog
+
+INSERT_UPDATE Product; code[unique = true]; minAge; catalogversion(catalog(id[default = $productCatalog]), version[default = 'Online'])[unique = true, default = $productCatalog:Online]
+                     ; 325414             ; 12
+                     ; 932577             ; 3
+                     ; 29925              ; 18
+                     ; 23355              ; 3

@@ -1,0 +1,41 @@
+## messageSource=classpath:/questionsaddon/messages/email-questionsUpdates_$lang.properties
+
+<html>
+<head>
+</head>
+<body bgcolor="#ffffff">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+
+    #if ($ctx.products.isEmpty())
+        ${ctx.messages.noQuestions}.
+    #end
+
+    #foreach( $product in ${ctx.products})
+        <tr>
+            <div>ID:$product.code</div>
+            <div style="font-weight: bold">$product.name</div>
+        </tr>
+        <tr>
+            <td>${ctx.messages.questionsAll}:</td>
+        </tr>
+
+        #foreach( $question in $product.questions)
+            <tr>
+                <td>${ctx.messages.askedBy}: $question.questionCustomer</td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="font-weight: bold; font-style: italic">$question.question</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    $!question.answer
+                </td>
+            </tr>
+        #end
+    #end
+
+</table>
+</body>
+</html>

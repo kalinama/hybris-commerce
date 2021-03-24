@@ -13,81 +13,155 @@
 	ATTENTION: This is just an example file. You have to edit it according to your needs.
 -->
 
-<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-			xsi:noNamespaceSchemaLocation="items.xsd">
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="items.xsd">
 
-	<relations>
-		<relation code="Product2Question" autocreate="true" localized="false">
-			<sourceElement type="Product" qualifier="product" cardinality="one"/>
-			<targetElement type="Question" qualifier="questions" cardinality="many" collectiontype="set"/>
-		</relation>
-	</relations>
+    <collectiontypes>
+        <collectiontype code="QuestionList" elementtype="Question" autocreate="true" generate="true" type="list"/>
+    </collectiontypes>
 
-	<itemtypes>
-		<itemtype code="Product" autocreate="false" generate="false">
-			<attributes>
-				<attribute qualifier="questionCount" type="java.lang.Integer">
-					<persistence type="property"/>
-				</attribute>
-			</attributes>
-		</itemtype>
+    <relations>
+        <relation code="Product2Question" autocreate="true" localized="false">
+            <sourceElement type="Product" qualifier="product" cardinality="one"/>
+            <targetElement type="Question" qualifier="questions" cardinality="many" collectiontype="set"/>
+        </relation>
+    </relations>
 
-		<itemtype code="CMSProductListComponent" autocreate="false" generate="false">
-			<attributes>
-				<attribute qualifier="productDiscussionImage" type="Media">
-					<persistence type="property"/>
-				</attribute>
-			</attributes>
-		</itemtype>
+    <itemtypes>
 
-		<itemtype code="Question" autocreate="true" generate="true">
-			<deployment table="Questions" typecode="10100"/>
-			<attributes>
-				<attribute qualifier="code" type="java.lang.String">
-					<persistence type="property"/>
-					<modifiers optional="false" initial="true" unique="true"/>
-				</attribute>
-				<attribute qualifier="question" type="localized:java.lang.String">
-					<persistence type="property">
-						<columntype>
-							<value>varchar(500)</value>
-						</columntype>
-					</persistence>
-					<modifiers optional="false" initial="true"/>
-				</attribute>
-				<attribute qualifier="questionCustomer" type="Customer">
-					<persistence type="property"/>
-					<modifiers optional="false" initial="true"/>
-					<description>customer who asked the question; can be anonymous</description>
-				</attribute>
-				<attribute qualifier="answer" type="localized:java.lang.String">
-					<persistence type="property">
-						<columntype>
-							<value>varchar(1000)</value>
-						</columntype>
-					</persistence>
-				</attribute>
-				<attribute qualifier="answerCustomer" type="Customer">
-					<persistence type="property"/>
-					<description>customer who answered the question; can be anonymous</description>
-				</attribute>
-			</attributes>
-		</itemtype>
+        <itemtype code="Product" autocreate="false" generate="false">
+            <attributes>
+                <attribute qualifier="questionCount" type="java.lang.Integer">
+                    <persistence type="dynamic" attributeHandler="productQuestionCountAttributeHandler"/>
+                    <modifiers read="true" write="false"/>
+                </attribute>
+                <attribute qualifier="minAge" type="java.lang.Integer">
+                    <description>minimum age allowed to use this product</description>
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
 
-		<itemtype code="QuestionsCMSComponent" extends="SimpleCMSComponent" generate="true" autocreate="true"
-				  abstract="false" jaloclass="com.hybris.training.jalo.QuestionsCMSComponent">
-			<description>component for displaying question/answer feature on PDP</description>
-			<attributes>
-				<attribute qualifier="numberOfQuestionsToShow " type="java.lang.Integer">
-					<defaultvalue>3</defaultvalue>
-					<persistence type="property"/>
-					<modifiers optional="false"/>
-				</attribute>
-				<attribute qualifier="fontSize" type="java.lang.Integer">
-					<defaultvalue>12</defaultvalue>
-					<persistence type="property"/>
-				</attribute>
-			</attributes>
-		</itemtype>
-	</itemtypes>
+        <itemtype code="Customer" autocreate="false" generate="false">
+            <attributes>
+                <attribute qualifier="isInternal" type="java.lang.Boolean">
+                    <description>defines if the customer is a hybris internal employee</description>
+                    <persistence type="dynamic" attributeHandler="customerIsInternalAttributeHandler"/>
+                    <modifiers read="true" write="false"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="CMSProductListComponent" autocreate="false" generate="false">
+            <attributes>
+                <attribute qualifier="productDiscussionImage" type="Media">
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="Question" autocreate="true" generate="true">
+            <deployment table="Questions" typecode="10100"/>
+            <custom-properties>
+                <property name="catalogItemType">
+                    <value>java.lang.Boolean.TRUE</value>
+                </property>
+                <property name="catalogVersionAttributeQualifier">
+                    <value>"catalogVersion"</value>
+                </property>
+                <property name="uniqueKeyAttributeQualifier">
+                    <value>"code"</value>
+                </property>
+            </custom-properties>
+            <attributes>
+                <attribute qualifier="code" type="java.lang.String">
+                    <persistence type="property"/>
+                    <modifiers optional="false" initial="true" unique="true"/>
+                </attribute>
+                <attribute qualifier="catalogVersion" type="CatalogVersion">
+                    <persistence type="property"/>
+                    <modifiers optional="false"/>
+                </attribute>
+                <attribute qualifier="question" type="localized:java.lang.String">
+                    <persistence type="property">
+                        <columntype>
+                            <value>varchar(500)</value>
+                        </columntype>
+                    </persistence>
+                    <modifiers optional="false" initial="true"/>
+                </attribute>
+                <attribute qualifier="questionCustomer" type="Customer">
+                    <persistence type="property"/>
+                    <modifiers optional="false" initial="true"/>
+                    <description>customer who asked the question; can be anonymous</description>
+                </attribute>
+                <attribute qualifier="answer" type="localized:java.lang.String">
+                    <persistence type="property">
+                        <columntype>
+                            <value>varchar(1000)</value>
+                        </columntype>
+                    </persistence>
+                </attribute>
+                <attribute qualifier="answerCustomer" type="Customer">
+                    <persistence type="property"/>
+                    <description>customer who answered the question; can be anonymous</description>
+                </attribute>
+                <attribute qualifier="approved" type="java.lang.Boolean">
+                    <persistence type="dynamic" attributeHandler="questionApprovedAttributeHandler"/>
+                    <modifiers read="true" write="false"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="QuestionsCMSComponent" extends="SimpleCMSComponent" generate="true" autocreate="true"
+                  abstract="false" jaloclass="com.hybris.training.jalo.QuestionsCMSComponent">
+            <description>component for displaying question/answer feature on PDP</description>
+            <attributes>
+                <attribute qualifier="numberOfQuestionsToShow " type="java.lang.Integer">
+                    <defaultvalue>3</defaultvalue>
+                    <persistence type="property"/>
+                    <modifiers optional="false"/>
+                </attribute>
+                <attribute qualifier="fontSize" type="java.lang.Integer">
+                    <defaultvalue>12</defaultvalue>
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="QuestionsUpdatesEmailProcess"
+                  extends="StoreFrontCustomerProcess" generate="true" autocreate="true">
+            <attributes>
+                <attribute qualifier="questions" type="QuestionList">
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="QuestionsUpdatesEmailSendingCronJob"
+                  extends="CronJob" generate="true" autocreate="true">
+            <attributes>
+                <attribute qualifier="recipientEmailAddress" type="java.lang.String">
+                    <description>the e-mail address to which to send questions updates</description>
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="baseSite" type="BaseSite">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="store" type="BaseStore">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="catalogVersion" type="CatalogVersion">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="language" type="Language">
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="lastStartTime" type="java.util.Date">
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+    </itemtypes>
 </items>

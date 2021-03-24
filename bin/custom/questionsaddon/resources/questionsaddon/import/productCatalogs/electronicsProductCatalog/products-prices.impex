@@ -10,10 +10,22 @@
 # -----------------------------------------------------------------------
 #% impex.setLocale( Locale.GERMAN );
 
-$productCatalog=electronicsProductCatalog
-$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default='$productCatalog:Staged']
-$prices=Europe1prices[translator=de.hybris.platform.europe1.jalo.impex.Europe1PricesTranslator]
-$taxGroup=Europe1PriceFactory_PTG(code)[default=jp-vat-full]
+$productCatalog = electronicsProductCatalog
+$catalogVersion = catalogversion(catalog(id[default=$productCatalog]), version[default='Staged'])[unique=true, default='$productCatalog:Staged']
+$prices = Europe1prices[translator=de.hybris.platform.europe1.jalo.impex.Europe1PricesTranslator]
+$taxGroup = Europe1PriceFactory_PTG(code)[default=jp-vat-full]
 
 # Set product approval status to Approved only for those products that have prices.
-$approved=approvalstatus(code)[default='approved']
+$approved = approvalstatus(code)[default='approved']
+
+INSERT_UPDATE UserPriceGroup; code[unique = true];
+                            ; hybridsPriceGroup  ;
+
+UPDATE Usergroup; uid[unique = true]; userPriceGroup(code)
+                ; hybrids           ; hybridsPriceGroup
+
+INSERT_UPDATE PriceRow; product(code, $catalogVersion)[unique = true]; price  ; currency(isocode)[unique = true]; ug(code[default = hybridsPriceGroup])[unique = true]; minqtd[default = 1]; unitFactor[default = 1]; $catalogVersion; unit(code[default = pieces])
+                      ; 107701                                       ; 165,50 ; USD
+                      ; 107701                                       ; 15110  ; JPY
+                      ; 266899                                       ; 80     ; USD
+                      ; 266899                                       ; 7120   ; JPY

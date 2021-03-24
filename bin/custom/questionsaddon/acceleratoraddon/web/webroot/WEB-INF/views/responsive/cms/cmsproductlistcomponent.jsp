@@ -3,6 +3,8 @@
 <%@ taglib prefix="nav" tagdir="/WEB-INF/tags/responsive/nav" %>
 <%@ taglib prefix="storepickup" tagdir="/WEB-INF/tags/responsive/storepickup" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="productQuestionsaddon" tagdir="/WEB-INF/tags/addons/questionsaddon/responsive/product"%>
+
 
 <spring:htmlEscape defaultHtmlEscape="true"/>
 
@@ -15,7 +17,7 @@
         <c:if test="${product.questionCount > 0}">
             <img src="${productDiscussionImage.downloadURL}" class="cmsProductListComponent_discussionImage">
         </c:if>
-        <product:productListerItem product="${product}"/>
+        <productQuestionsaddon:productListerItem product="${product}"/>
     </c:forEach>
 </div>
 

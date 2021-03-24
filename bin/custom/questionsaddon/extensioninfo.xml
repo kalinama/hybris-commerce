@@ -18,6 +18,8 @@
 		<requires-extension name="commercefacades"/>
 		<requires-extension name="acceleratorcms"/>
 		<requires-extension name="solrfacetsearch"/>
+		<requires-extension name="promotionengineservices"/>
+		<requires-extension name="acceleratorservices"/>
 
 		<coremodule generated="true" manager="com.hybris.training.jalo.QuestionsaddonManager" packageroot="com.hybris.training"/>
 

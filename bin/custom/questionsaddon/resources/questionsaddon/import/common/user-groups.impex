@@ -8,8 +8,25 @@
 # Information and shall use it only in accordance with the terms of the
 # license agreement you entered into with SAP.
 # -----------------------------------------------------------------------
-$regulargroup=regulargroup
-$customergroup=customergroup
+$regulargroup = regulargroup
+$customergroup = customergroup
+$hybridsgroup = hybrids
 
-$defaultPassword=12341234
+$defaultPassword = 12341234
 
+# Create Customer Group
+INSERT_UPDATE Usergroup; uid[unique = true]; groups(uid)[mode = append]
+                       ; $regulargroup     ; $customergroup
+                       ; $hybridsgroup     ; $customergroup
+
+INSERT_UPDATE Customer; uid[unique = true]; name              ; password[default = $defaultPassword]; groups(uid)[default = $customergroup]; displayName[lang = en]
+                      ; katery@hybris.com ; Kate Jonsen
+                      ; hhgt@hybr.com     ; Nick Bylwin
+                      ; margokr@gmail.com ; Margarita Ageenko ;                                     ;                                      ; Margo Ageenko
+
+# Create Test Users
+INSERT_UPDATE Employee; UID[unique = true]     ; name                     ; groups(uid)[mode = append]
+                      ; questionsaddontestuser ; Questionsaddon Test User ; employeegroup
+
+INSERT_UPDATE Employee; UID[unique = true]; groups(uid)[mode = append]; password[default = $defaultPassword];backOfficeLoginDisabled
+                      ; admintest             ; backofficeadministratorrole; false

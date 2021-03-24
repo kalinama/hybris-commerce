@@ -10,9 +10,78 @@
 # -----------------------------------------------------------------------
 #% impex.setLocale( Locale.GERMAN );
 
-$defaultPromoGrp=electronicsPromoGrp
-$favCustomers=favoriteCustomers
-$bigSpenders=bigSpenders
-$productCatalog=electronicsProductCatalog
-$catalogVersion=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$productCatalog]),CatalogVersion.version[default=Online])[default=$productCatalog:Online]
-$regulargroup=regulargroup
+$defaultPromoGrp = electronicsPromoGrp
+$favCustomers = favoriteCustomers
+$bigSpenders = bigSpenders
+$productCatalog = electronicsProductCatalog
+$catalogVersion = catalogVersion(CatalogVersion.catalog(Catalog.id[default=$productCatalog]), CatalogVersion.version[default=Online])[default=$productCatalog:Online]
+$regulargroup = regulargroup
+
+$promotionsModule = "promotions-module"
+$previewModule = "promotions-preview-module"
+$defaultRuleStatus = UNPUBLISHED
+$ruleImportProcessor = processor=de.hybris.platform.ruleengineservices.impex.impl.ConditionalImportProcessor, condition=de.hybris.platform.ruleengineservices.impex.impl.RuleImportCondition
+
+INSERT_UPDATE SingleCodeCoupon; couponId[unique = true]; name[lang = en]                                ; active; maxredemptionspercustomer; maxtotalredemptions
+                              ; "TRAINING_BUY"         ; "Get $10 discount on the cart for three times" ; true  ; 3                        ;
+
+
+INSERT_UPDATE PromotionSourceRule[$ruleImportProcessor]; code[unique = true]                                 ; name[lang = en]                               ; maxAllowedRuns; priority; website(Identifier)[default = $defaultPromoGrp]; ruleGroup(code)          ; status(code)[default = $defaultRuleStatus]; description[lang = en]                                                    ; conditions; actions; messageFired[lang = en]
+"#% afterEach: de.hybris.platform.core.Registry.getApplicationContext().getBean(""ruleEngineSystemSetup"").registerSourceRuleForDeployment(impex.getLastImportedItem(), new String[]{$promotionsModule});"
+                                                       ; order_threshold_10_percentage_discount_over_100_USD ; "Get total 10% off all orders over $100"      ; 1             ; 20      ;                                                ; orderPromotionRuleGroup  ;                                           ; "Spend more than $100 and get 10% discount on all order"                  ; "[
+   {
+      ""definitionId"":""y_cart_total"",
+      ""parameters"": {
+        ""value"": {
+          ""uuid"":""3a050490-820e-4310-b848-6fba2551756c"",
+          ""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",
+          ""value"": {
+            ""USD"":100
+          }
+        },
+        ""operator"": {
+          ""uuid"":""9aaa4849-eefe-4065-bd8c-5f8383011b44"",
+          ""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",
+          ""value"":""GREATER_THAN_OR_EQUAL""
+        }
+      },
+      ""children"": []
+   }
+ ]"       ; "[
+   {
+     ""definitionId"":""y_order_percentage_discount"",
+     ""parameters"": {
+       ""value"": {
+         ""uuid"":""fbcf7a19-d758-4524-8124-2e58efbbce6d"",
+         ""type"":""java.math.BigDecimal"",
+         ""value"":10
+       }
+     }
+   }
+ ]"    ; "Buy over {3a050490-820e-4310-b848-6fba2551756c} - get {fbcf7a19-d758-4524-8124-2e58efbbce6d}% off on products"
+                                                       ; coupon_training_fixed_discount_10_USD               ; "Get $10 discount on the cart using a coupon" ; 1             ; 25      ;                                                ; couponPromotionRuleGroup ;                                           ; "A $10 discount is added to the cart when a valid coupon code is entered" ; "[
+   {
+     ""definitionId"":""y_qualifying_coupons"",
+     ""parameters"": {
+       ""coupons"": {
+         ""uuid"":""c907e498-55af-4322-92e0-bee83bf15223"",
+         ""type"":""List(ItemType(AbstractCoupon))"",
+         ""value"": [""TRAINING_BUY""]
+       }
+     },
+     ""children"": []
+   }
+ ]"       ; "[
+   {
+     ""definitionId"":""y_order_fixed_discount"",
+     ""parameters"": {
+       ""value"": {
+         ""uuid"":""ea919319-b878-4f44-8f3d-b247ae380c97"",
+         ""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",
+         ""value"": {
+           ""USD"":10
+         }
+       }
+     }
+   }
+ ]"    ; "You have received {ea919319-b878-4f44-8f3d-b247ae380c97} discount on cart using the coupon code {c907e498-55af-4322-92e0-bee83bf15223}"

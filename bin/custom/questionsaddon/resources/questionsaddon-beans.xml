@@ -18,6 +18,7 @@
 	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
 		<property name="questionCount" type="Integer"/>
 		<property name="questions" type="java.util.List&lt;com.hybris.training.data.QuestionData&gt;" />
+		<property name="minAge" type="Integer"/>
 	</bean>
 	
 	<bean class="com.hybris.training.data.QuestionData">
